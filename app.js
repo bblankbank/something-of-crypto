@@ -54,7 +54,7 @@ const checkAddressBalance = () => {
         console.log("ERROR!!!", err)
         })
     if(!stopFlg) {
-        setTimeout(checkAddressBalance, 500)
+        setTimeout(checkAddressBalance, 250)
     }
 }
 
