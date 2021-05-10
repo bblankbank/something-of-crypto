@@ -62,7 +62,7 @@ queryForm2.addEventListener('submit', async function(e) {
     const res = checkNewTrans(address, key);
 })
 
-const checkStatus = async (hash, key, dom) => { console.log('func: checkStatus');
+const checkStatus = async (hash, key, dom) => { 
     try {
         const config = {params: {module: 'transaction', action: 'gettxreceiptstatus', txhash: hash, apikey: key}};
         const res = await axios.get('https://api.bscscan.com/api', config)
@@ -85,12 +85,11 @@ const checkStatus = async (hash, key, dom) => { console.log('func: checkStatus')
     }
 }
 
-const checkNewTrans = async (address, key) => { console.log('func: checkNewTrans');
+const checkNewTrans = async (address, key) => {
     try{
         const config = {params: {module: 'account', action: 'tokentx', address: address, apikey: key, sort: 'asc'}};
         const res = await axios.get('https://api.bscscan.com/api', config)
         const transArr = res.data.result.filter(tran => tran.tokenName === "Pancake LPs").filter(tran => tran.timeStamp > queryForm2.elements.timestamp.value)
-        console.log('NEW TRAN', !transArr.some(tran => hashArr.includes(tran.hash)))
         if(!transArr.some(tran => hashArr.includes(tran.hash))) {
             const newTrans = transArr.filter(tran => !hashArr.includes(tran.hash))
             for(tran of newTrans) {
