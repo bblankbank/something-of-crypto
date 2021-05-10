@@ -29,7 +29,7 @@ h2::after {
     height: 1px;
     right: 20px;
     top: 50%;
-    background-color: gray;
+    background-color: black;
     position: absolute;
     z-index: -2;
 }
