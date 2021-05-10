@@ -1,17 +1,15 @@
 .status {
-    font-size:100px;
+    font-size: 40px;
     font-weight:700;
     color:yellow;
     text-transform:uppercase;
 }
 
-table, th ,td {
-    border: 1px solid gray;
-    border-collapse: collapse;
+p:first-of-type {
+    margin-top: 20px;
 }
 
 table {
-    width: 60%;
     margin-top: 20px;
 }
 
@@ -33,4 +31,17 @@ h2::after {
     top: 50%;
     background-color: gray;
     position: absolute;
+    z-index: -2;
+}
+
+h2 span {
+    background-color: white;
+}
+
+.func1 {
+    margin-top: 20px;
+}
+
+button {
+    margin-top: 20px;
 }

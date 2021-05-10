@@ -2,6 +2,7 @@ const queryForm1 = document.querySelector('.func1 > .query-form');
 const cbalance1 = document.querySelector('.func1 > p > .cbalance');
 const nbalance1 = document.querySelector('.func1 > p > .nbalance');
 const status1 = document.querySelector('.func1 > p > .status');
+const reset1 = document.querySelector('.reset-btn');
 
 queryForm1.elements.timestamp.value = Math.round(new Date().getTime() / 1000) - 86400;
 
@@ -21,13 +22,30 @@ const checkAddressBalance = async (address, key) => {
         }
         nbalance1.innerText = res.data.result;
         if(cbalance1.innerText !== nbalance1.innerText) {
-            alert('BALANCE CHANGE!!!');
+            status1.innerText = 'balance change!!! balance change!!! balance change!!!';
             cbalance1.innerText = nbalance1.innerText;
         }
+
+        const delayCheckBalance = (address, key) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log('func: nextBalance');
+                    checkAddressBalance(address, key);
+                }, 500)
+            })
+        }
+        let nextTrans = await delayCheckBalance(address, key);
+
     } catch(e) {
         console.log('ERROR!!!', e)
     }
 }
+
+reset1.addEventListener('click', () => {
+    cbalance1.innerText = '';
+    nbalance1.innerText = '';
+    status1.innerText = '';
+}) 
 
 const queryForm2 = document.querySelector('.func2 > .query-form');
 const stopBtn2 = document.querySelector('.func2 > .stop-btn');
@@ -48,10 +66,19 @@ const checkStatus = async (hash, key, dom) => { console.log('func: checkStatus')
     try {
         const config = {params: {module: 'transaction', action: 'gettxreceiptstatus', txhash: hash, apikey: key}};
         const res = await axios.get('https://api.bscscan.com/api', config)
-        if(res.data.result.status) dom.innerHTML = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="15" fill="green" /></svg>`;
+        if(res.data.result.status) dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="25" r="10" fill="green" /></svg>`;
             else {
-                dom.innerHTML = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="15" fill="red" /></svg>`;
-                setTimeout(checkStatus(hash, key, dom), 100);
+                dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="25" r="10" fill="red" /></svg>`;
+
+                const delayCheckStatus = (hash, key, dom) => {
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            console.log('func: nextStatus');
+                            checkStatus(hash, key, dom);
+                        }, 500)
+                    })
+                }
+                let nextStatus = await delayCheckTrans(address, key);
             }
     } catch(e) {
         console.log('ERROR!!!', e)
@@ -83,7 +110,7 @@ const checkNewTrans = async (address, key) => { console.log('func: checkNewTrans
                 newTr.append(tdToken);
 
                 const tdStatus = document.createElement('td');
-                tdStatus.innerHTML = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="15" fill="yellow" /></svg>`;
+                tdStatus.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="25" r="10" fill="yellow" /></svg>`;
                 newTr.append(tdStatus);
                 const statusCode = checkStatus(tran.hash, key, tdStatus)
             }
@@ -91,13 +118,12 @@ const checkNewTrans = async (address, key) => { console.log('func: checkNewTrans
         const delayCheckTrans = (address, key) => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
+                    console.log('func: nextTrans');
                     checkNewTrans(address, key);
-                }, 1000)
+                }, 500)
             })
         }
-
         let nextTrans = await delayCheckTrans(address, key);
-        console.log('func: nextTrans');
 
     } catch(e) {
         console.log('ERROR!!!', e)
