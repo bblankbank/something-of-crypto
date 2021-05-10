@@ -8,17 +8,45 @@
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <div>
-        <label for="address">Address: </label>
-        <input type="text" id="address" placeholder="address" size=45>  
-        <button class="start-btn">Start</button>
-        <button class="stop-btn">Stop</button>
-        <button class="reset-btn">Reset</button>
-    </div>
-    cBalance: <span class="cbalance"></span> nBalance: <span class="nbalance"></span> Status: <span class="status"></span>
-    <ul class="progress">
+    <section class="func1">
+        <h2>1. getBalanceByAddress</h2>
+        <form class="query-form">
+            <label for="address">Address: </label>
+            <input type="text" id="address" placeholder="address" name="address" size=45>  
+            <label for="key">Key: </label>
+            <input type="text" id="key" placeholder="key" name="key" size=40>  
+            <label for="timestamp">Min Timestamp: </label>
+            <input type="text" id="timestamp" placeholder="timestamp" name="timestamp" size=10>  
+            <button type="submit" class="start-btn">Start</button>
+        </form>
+        <p>Current Balance: <span class="cbalance"></span> New Balance: <span class="nbalance"></span> Status: <span class="status"></span></p>
+    </section>
 
-    </ul>
+    <section class="func2">
+        <h2>2. getLPTransbyAddress</h2>
+        <form class="query-form">
+            <label for="address">Address: </label>
+            <input type="text" id="address" placeholder="address" name="address" size=45>  
+            <label for="key">Key: </label>
+            <input type="text" id="key" placeholder="key" name="key" size=40>  
+            <label for="timestamp">Min Timestamp: </label>
+            <input type="text" id="timestamp" placeholder="timestamp" name="timestamp" size=10>  
+            <button type="submit" class="start-btn">Start</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hash</td>
+                    <th>Block Number</td>
+                    <th>Token Name</td>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody class="table-trans">
+            </tbody>
+        </table>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

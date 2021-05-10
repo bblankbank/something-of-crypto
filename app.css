@@ -4,3 +4,33 @@
     color:yellow;
     text-transform:uppercase;
 }
+
+table, th ,td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+table {
+    width: 60%;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 5px;
+}
+
+h2 {
+    font-size: 20px;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 80%;
+    height: 1px;
+    right: 20px;
+    top: 50%;
+    background-color: gray;
+    position: absolute;
+}
