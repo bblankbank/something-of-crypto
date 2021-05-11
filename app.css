@@ -1,31 +1,45 @@
 .status {
     font-size: 40px;
     font-weight:700;
-    color:yellow;
+    color:#FFBF00;
     text-transform:uppercase;
 }
 
 th, td {
     padding: 5px;
+    color: #454545;
 }
 
-h2 {
+.cbalance, .nbalance {
+    color: #6495ED
+}
+
+.a-toggle {
     font-size: 20px;
     position: relative;
 }
 
-h2::after {
+.a-toggle::after {
     content: '';
     display: block;
     width: 80%;
     height: 1px;
-    right: 20px;
+    right: 0;
     top: 50%;
-    background-color: black;
+    background-color: #454545;
     position: absolute;
     z-index: -2;
 }
 
-h2 span {
+.a-toggle-content {
+    text-decoration: none;
+    color: #454545;
+}
+
+.a-toggle-content:hover {
+    color: #454545;
+}
+
+.a-toggle-content span {
     background-color: white;
 }
