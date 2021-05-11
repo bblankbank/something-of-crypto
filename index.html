@@ -9,34 +9,34 @@
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <section class="func1 container">
+    <section class="container mt-3">
         <h2><span>1. getBalanceByAddress</span></h2>
-        <form class="query-form">
+        <form class="f1 query-form">
             <label for="address" class="form-label">Address: </label>
             <input type="text" id="address" class="form-control" placeholder="address" name="address" size=45>  
             <label for="key" class="form-label">Key: </label>
             <input type="text" id="key" class="form-control" placeholder="key" name="key" size=40>  
-            <label for="timestamp" class="form-label">Min Timestamp: </label>
-            <input type="text" id="timestamp" class="form-control" placeholder="timestamp" name="timestamp" size=10>  
-            <button type="submit" class="start-btn btn btn-primary">Start</button>
-            <button type="button" class="reset-btn btn btn-primary">Reset</button>
+            <button type="submit" class="f1 start-btn btn btn-primary mt-3">Start</button>
+            <button type="button" class="f1 reset-btn btn btn-primary mt-3">Reset</button>
         </form>
-        <p>Current Balance: <span class="cbalance"></span> New Balance: <span class="nbalance"></span></p>
-        <p>Status: <span class="status"></span></p>
+        <div class="mt-3">
+            <p>Current Balance: <span class="f1 cbalance"></span> New Balance: <span class="f1 nbalance"></span></p>
+            <p>Status: <span class="f1 status"></span></p>
+        </div>
     </section>
 
-    <section class="func2 container">
+    <section class="container">
         <h2><span>2. getLPTransbyAddress</span></h2>
-        <form class="query-form">
+        <form class="f2 query-form">
             <label for="address" class="form-label">Address: </label>
             <input type="text" id="address" class="form-control" placeholder="address" name="address" size=45>  
             <label for="key" class="form-label">Key: </label>
             <input type="text" id="key" class="form-control" placeholder="key" name="key" size=40>  
             <label for="timestamp" class="form-label">Min Timestamp: </label>
             <input type="text" id="timestamp" class="form-control" placeholder="timestamp" name="timestamp" size=10>  
-            <button type="submit" class="start-btn btn btn-primary">Start</button>
+            <button type="submit" class="start-btn btn btn-primary mt-3">Start</button>
         </form>
-        <table class="table">
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th scope="col">Hash</td>
@@ -45,7 +45,7 @@
                     <th scope="col">Status</th>
                 </tr>
             </thead>
-            <tbody class="table-trans">
+            <tbody class="f2 table-trans">
             </tbody>
         </table>
     </section>

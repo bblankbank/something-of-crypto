@@ -5,14 +5,6 @@
     text-transform:uppercase;
 }
 
-p:first-of-type {
-    margin-top: 20px;
-}
-
-table {
-    margin-top: 20px;
-}
-
 th, td {
     padding: 5px;
 }
@@ -36,12 +28,4 @@ h2::after {
 
 h2 span {
     background-color: white;
-}
-
-.func1 {
-    margin-top: 20px;
-}
-
-button {
-    margin-top: 20px;
 }

@@ -1,10 +1,8 @@
-const queryForm1 = document.querySelector('.func1 > .query-form');
-const cbalance1 = document.querySelector('.func1 > p > .cbalance');
-const nbalance1 = document.querySelector('.func1 > p > .nbalance');
-const status1 = document.querySelector('.func1 > p > .status');
-const reset1 = document.querySelector('.reset-btn');
-
-queryForm1.elements.timestamp.value = Math.round(new Date().getTime() / 1000) - 86400;
+const queryForm1 = document.querySelector('.f1.query-form');
+const cbalance1 = document.querySelector('.f1.cbalance');
+const nbalance1 = document.querySelector('.f1.nbalance');
+const status1 = document.querySelector('.f1.status');
+const reset1 = document.querySelector('.f1.reset-btn');
 
 queryForm1.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -16,7 +14,7 @@ queryForm1.addEventListener('submit', async function(e) {
 const checkAddressBalance = async (address, key) => {
     try {
         const config = {params: {module: 'account', action: 'balance', address: address, tax: 'lastest', apikey: key}};
-        const res = await axios.get('https://api.bscscan.com/api', config)
+        const res = await axios.get('https://api.bscscan.com/api', config);
         if(cbalance1.innerText === '') {
             cbalance1.innerText = res.data.result;
         }
@@ -31,7 +29,7 @@ const checkAddressBalance = async (address, key) => {
                 setTimeout(() => {
                     console.log('func: nextBalance');
                     checkAddressBalance(address, key);
-                }, 500)
+                }, 1000)
             })
         }
         let nextTrans = await delayCheckBalance(address, key);
@@ -47,9 +45,8 @@ reset1.addEventListener('click', () => {
     status1.innerText = '';
 }) 
 
-const queryForm2 = document.querySelector('.func2 > .query-form');
-const stopBtn2 = document.querySelector('.func2 > .stop-btn');
-const tabletrans2 = document.querySelector('.func2 > table > .table-trans');
+const queryForm2 = document.querySelector('.f2.query-form');
+const tabletrans2 = document.querySelector('.f2.table-trans');
 
 const hashArr = [];
 
@@ -75,10 +72,10 @@ const checkStatus = async (hash, key, dom) => {
                         setTimeout(() => {
                             console.log('func: nextStatus');
                             checkStatus(hash, key, dom);
-                        }, 500)
+                        }, 1000)
                     })
                 }
-                let nextStatus = await delayCheckTrans(address, key);
+                let nextStatus = await delayCheckStatus(address, key);
             }
     } catch(e) {
         console.log('ERROR!!!', e)
@@ -88,7 +85,7 @@ const checkStatus = async (hash, key, dom) => {
 const checkNewTrans = async (address, key) => {
     try{
         const config = {params: {module: 'account', action: 'tokentx', address: address, apikey: key, sort: 'asc'}};
-        const res = await axios.get('https://api.bscscan.com/api', config)
+        const res = await axios.get('https://api.bscscan.com/api', config);
         const transArr = res.data.result.filter(tran => tran.tokenName === "Pancake LPs").filter(tran => tran.timeStamp > queryForm2.elements.timestamp.value)
         if(!transArr.some(tran => hashArr.includes(tran.hash))) {
             const newTrans = transArr.filter(tran => !hashArr.includes(tran.hash))
@@ -119,7 +116,7 @@ const checkNewTrans = async (address, key) => {
                 setTimeout(() => {
                     console.log('func: nextTrans');
                     checkNewTrans(address, key);
-                }, 500)
+                }, 1000)
             })
         }
         let nextTrans = await delayCheckTrans(address, key);
