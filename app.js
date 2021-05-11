@@ -36,7 +36,7 @@ const checkAddressBalance = async (address, key) => {
                 setTimeout(() => {
                     console.log('func: nextBalance');
                     checkAddressBalance(address, key);
-                }, 1000)
+                }, 500)
             })
         }
         let nextTrans = await delayCheckBalance(address, key);
