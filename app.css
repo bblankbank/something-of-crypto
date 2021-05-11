@@ -52,3 +52,8 @@ ul, li {
 .a-toggle-content span {
     background-color: white;
 }
+
+a {
+    color: #6495ED;
+    text-decoration: none;
+}

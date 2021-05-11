@@ -74,9 +74,9 @@ const checkStatus = async (hash, key, dom) => {
     try {
         const config = {params: {module: 'transaction', action: 'gettxreceiptstatus', txhash: hash, apikey: key}};
         const res = await axios.get('https://api.bscscan.com/api', config)
-        if(res.data.result.status) dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="25" r="10" fill="green" /></svg>`;
+        if(res.data.result.status) dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="20" r="10" fill="green" /></svg>`;
             else {
-                dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="25" r="10" fill="red" /></svg>`;
+                dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="20" r="10" fill="red" /></svg>`;
 
                 const delayCheckStatus = (hash, key, dom) => {
                     return new Promise((resolve, reject) => {
@@ -105,7 +105,7 @@ const checkNewTrans = async (address, key) => {
                 const newTr = document.createElement('tr');
                 tabletrans2.append(newTr);
                 const tdHash = document.createElement('td');
-                tdHash.append(tran.hash);
+                tdHash.innerHTML = `<a href='https://bscscan.com/tx/${tran.hash}' target='_blank'>${tran.hash}</a>`;
                 newTr.append(tdHash);
                 
                 const tdBlock = document.createElement('td');
@@ -117,7 +117,7 @@ const checkNewTrans = async (address, key) => {
                 newTr.append(tdToken);
 
                 const tdStatus = document.createElement('td');
-                tdStatus.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="25" r="10" fill="yellow" /></svg>`;
+                tdStatus.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="20" r="10" fill="yellow" /></svg>`;
                 newTr.append(tdStatus);
                 const statusCode = checkStatus(tran.hash, key, tdStatus)
             }
