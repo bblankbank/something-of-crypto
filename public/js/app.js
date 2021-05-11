@@ -58,6 +58,7 @@ status1.addEventListener('click', () => {
 
 const queryForm2 = document.querySelector('.f2.query-form');
 const tabletrans2 = document.querySelector('.f2.table-trans');
+const statusCheck2 = document.querySelector('.form-check-input')
 
 const hashArr = [];
 
@@ -117,9 +118,10 @@ const checkNewTrans = async (address, key) => {
                 newTr.append(tdToken);
 
                 const tdStatus = document.createElement('td');
-                tdStatus.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="20" r="10" fill="yellow" /></svg>`;
                 newTr.append(tdStatus);
-                const statusCode = checkStatus(tran.hash, key, tdStatus)
+                if(statusCheck2.checked) {
+                    const statusCode = checkStatus(tran.hash, key, tdStatus)
+                }
             }
         }
         const delayCheckTrans = (address, key) => {
@@ -127,7 +129,7 @@ const checkNewTrans = async (address, key) => {
                 setTimeout(() => {
                     console.log('func: nextTrans');
                     checkNewTrans(address, key);
-                }, 1000)
+                }, 500)
             })
         }
         let nextTrans = await delayCheckTrans(address, key);
