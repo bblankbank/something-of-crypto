@@ -2,7 +2,7 @@ const queryForm1 = document.querySelector('.f1.query-form');
 const cbalance1 = document.querySelector('.f1.cbalance');
 const nbalance1 = document.querySelector('.f1.nbalance');
 const status1 = document.querySelector('.f1.status');
-const reset1 = document.querySelector('.f1.reset-btn');
+// const reset1 = document.querySelector('.f1.reset-btn');
 
 queryForm1.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -20,7 +20,7 @@ const checkAddressBalance = async (address, key) => {
         }
         nbalance1.innerText = res.data.result;
         if(cbalance1.innerText !== nbalance1.innerText) {
-            status1.innerText = 'balance change!!! balance change!!! balance change!!!';
+            status1.innerText = 'balance change!!!';
             cbalance1.innerText = nbalance1.innerText;
         }
 
@@ -39,11 +39,15 @@ const checkAddressBalance = async (address, key) => {
     }
 }
 
-reset1.addEventListener('click', () => {
-    cbalance1.innerText = '';
-    nbalance1.innerText = '';
+// reset1.addEventListener('click', () => {
+//     cbalance1.innerText = '';
+//     nbalance1.innerText = '';
+//     status1.innerText = '';
+// }) 
+
+status1.addEventListener('click', () => {
     status1.innerText = '';
-}) 
+})
 
 const queryForm2 = document.querySelector('.f2.query-form');
 const tabletrans2 = document.querySelector('.f2.table-trans');
