@@ -7,11 +7,18 @@
 
 th, td {
     padding: 5px;
-    color: #454545;
 }
 
-.cbalance, .nbalance {
+.cbalance, .nbalance, .li-balance {
     color: #6495ED
+}
+
+ul, li {
+    list-style: none;
+}
+
+.li-balance {
+    display: inline-block;
 }
 
 .a-toggle {
@@ -26,18 +33,18 @@ th, td {
     height: 1px;
     right: 0;
     top: 50%;
-    background-color: #454545;
+    background-color: black;
     position: absolute;
     z-index: -2;
 }
 
 .a-toggle-content {
     text-decoration: none;
-    color: #454545;
+    color: black;
 }
 
 .a-toggle-content:hover {
-    color: #454545;
+    color: black;
 }
 
 .a-toggle-content span {

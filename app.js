@@ -3,6 +3,7 @@ const cbalance1 = document.querySelector('.f1.cbalance');
 const nbalance1 = document.querySelector('.f1.nbalance');
 const status1 = document.querySelector('.f1.status');
 // const reset1 = document.querySelector('.f1.reset-btn');
+const libalance1 = document.querySelector('.f1.li-balance');
 
 queryForm1.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -17,11 +18,17 @@ const checkAddressBalance = async (address, key) => {
         const res = await axios.get('https://api.bscscan.com/api', config);
         if(cbalance1.innerText === '') {
             cbalance1.innerText = res.data.result;
+            const newLi = document.createElement('li');
+            newLi.append(res.data.result);
+            libalance1.append(newLi);
         }
         nbalance1.innerText = res.data.result;
         if(cbalance1.innerText !== nbalance1.innerText) {
             status1.innerText = 'balance change!!!';
             cbalance1.innerText = nbalance1.innerText;
+            const newLi = document.createElement('li');
+            newLi.append(res.data.result);
+            libalance1.append(newLi);
         }
 
         const delayCheckBalance = (address, key) => {
