@@ -16,10 +16,16 @@
         </div>
         <div class="collapse mt-3 show" id="f1-content">
             <form class="f1 query-form">
-                <label for="address" class="form-label">Address: </label>
-                <input type="text" id="address" class="form-control" placeholder="address" name="address" size=45>  
-                <label for="key" class="form-label">Key: </label>
-                <input type="text" id="key" class="form-control" placeholder="key" name="key" size=40>  
+                <div class="row g-3">
+                    <div class="form-group col">
+                        <label for="address" class="form-label">Address: </label>
+                        <input type="text" id="address" class="form-control" placeholder="address" name="address" size=45>
+                    </div>
+                    <div class="form-group col">
+                        <label for="key" class="form-label">Key: </label>
+                        <input type="text" id="key" class="form-control" placeholder="key" name="key" size=40>
+                    </div>
+                </div>
                 <div class="position-relative">
                     <button type="submit" class="f1 start-btn btn btn-primary mt-3">Start</button>
                     <div class="spinner-border text-primary f1 spin d-none" role="status">
@@ -42,12 +48,26 @@
         </div>
         <div class="collapse mt-3 show" id="f2-content">
             <form class="f2 query-form">
-                <label for="address" class="form-label">Address: </label>
-                <input type="text" id="address" class="form-control" placeholder="address" name="address" size=45>  
-                <label for="key" class="form-label">Key: </label>
-                <input type="text" id="key" class="form-control" placeholder="key" name="key" size=40>  
-                <label for="timestamp" class="form-label">Min Timestamp: </label>
-                <input type="text" id="timestamp" class="form-control" placeholder="timestamp" name="timestamp" size=10>  
+                <div class="row g-3">
+                    <div class="form-group col">
+                        <label for="address" class="form-label">Address: </label>
+                        <input type="text" id="address" class="form-control" placeholder="address" name="address" size=45>
+                    </div>
+                    <div class="form-group col">
+                        <label for="key" class="form-label">Key: </label>
+                        <input type="text" id="key" class="form-control" placeholder="key" name="key" size=40>
+                    </div>
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="form-group col">
+                        <label for="timestamp" class="form-label">Min Timestamp: </label>
+                        <input type="text" id="timestamp" class="form-control" placeholder="timestamp" name="timestamp" size=10>  
+                    </div>
+                    <div class="form-group col">
+                        <label for="key2" class="form-label">Key2: </label>
+                        <input type="text" id="key2" class="form-control f2 key2" placeholder="key2" name="key2" size=40 disabled>
+                    </div>
+                </div>
                 <div class="form-check mt-3">
                     <input class="form-check-input" type="checkbox" value="" id="status-check">
                     <label class="form-check-label" for="status-check">Status Check</label>

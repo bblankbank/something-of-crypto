@@ -59,8 +59,9 @@ f1_status.addEventListener('click', () => {
 
 const f2_form = document.querySelector('.f2.query-form');
 const f2_table = document.querySelector('.f2.table-trans');
-const f2_status = document.querySelector('.form-check-input');
+const f2_check = document.querySelector('.form-check-input');
 const f2_spin = document.querySelector('.f2.spin');
+const f2_key2 = document.querySelector('.f2.key2');
 
 const hashArr = [];
 
@@ -72,6 +73,10 @@ f2_form.addEventListener('submit', async function(e) {
     const key = f2_form.elements.key.value;
     f2_spin.classList.toggle('d-none')
     const res = checkNewTrans(address, key);
+})
+
+f2_check.addEventListener('change', () => {
+    f2_key2.toggleAttribute('disabled')
 })
 
 const checkStatus = async (hash, key, dom) => { 
@@ -88,7 +93,7 @@ const checkStatus = async (hash, key, dom) => {
                     return new Promise((resolve, reject) => {
                         setTimeout(() => {
                             checkStatus(hash, key, dom);
-                        }, 1000)
+                        }, 500)
                     })
                 }
                 let nextStatus = await delayCheckStatus(address, key);
@@ -123,8 +128,12 @@ const checkNewTrans = async (address, key) => {
 
                 const tdStatus = document.createElement('td');
                 newTr.append(tdStatus);
-                if(f2_status.checked) {
-                    const statusCode = checkStatus(tran.hash, key, tdStatus)
+                if(f2_check.checked) {
+                    if(f2_form.elements.key2.value) {
+                        const statusCode = checkStatus(tran.hash, f2_form.elements.key2.value, tdStatus)
+                    } else {
+                        const statusCode = checkStatus(tran.hash, key, tdStatus)
+                    }
                 }
             }
         }
