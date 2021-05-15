@@ -57,3 +57,9 @@ a {
     color: #6495ED;
     text-decoration: none;
 }
+
+.spin {
+    position: absolute;
+    top: 20px;
+    left: 80px;
+}

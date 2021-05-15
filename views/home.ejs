@@ -7,6 +7,7 @@
     <title>getBalanceByAddress</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
     <section class="container mt-3">
@@ -19,14 +20,17 @@
                 <input type="text" id="address" class="form-control" placeholder="address" name="address" size=45>  
                 <label for="key" class="form-label">Key: </label>
                 <input type="text" id="key" class="form-control" placeholder="key" name="key" size=40>  
-                <button type="submit" class="f1 start-btn btn btn-primary mt-3">Start</button>
-                <!-- <button type="button" class="f1 reset-btn btn btn-primary mt-3">Reset</button> -->
+                <div class="position-relative">
+                    <button type="submit" class="f1 start-btn btn btn-primary mt-3">Start</button>
+                    <div class="spinner-border text-primary f1 spin d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </form>
             <div class="mt-3">
                 <p>Current Balance: <span class="f1 cbalance"></span> New Balance: <span class="f1 nbalance"></span></p>
-                <ul>Balance Tracking: 
-                    <ul class="f1 li-balance"></ul>
-                </ul>
+                <p>Balance Tracking:</p>
+                <ul class="f1 li-balance"></ul>
                 <p>Status: <span class="f1 status"></span></p>
             </div>
         </div>
@@ -48,7 +52,12 @@
                     <input class="form-check-input" type="checkbox" value="" id="status-check">
                     <label class="form-check-label" for="status-check">Status Check</label>
                 </div>
-                <button type="submit" class="f2 start-btn btn btn-primary mt-3">Start</button>
+                <div class="position-relative">
+                    <button type="submit" class="f2 start-btn btn btn-primary mt-3">Start</button>
+                    <div class="spinner-border text-primary f2 spin d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </form>
             <table class="table mt-3">
                 <thead>
