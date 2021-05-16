@@ -24,7 +24,7 @@ const checkAddressBalance = async (address, key) => {
     try {
         const config = {params: {module: 'account', action: 'balance', address: address, tax: 'lastest', apikey: key}};
         const res = await axios.get('https://api.bscscan.com/api', config);
-        const result = (parseInt(res.data.result)/1000000000000000000).toFixed(18);
+        const result = (parseFloat(res.data.result)/1000000000000000000).toFixed(18);
         if(f1_cbalance.innerText === '') {
             f1_tbalance = result;
             f1_cbalance.innerText = result;
@@ -33,11 +33,19 @@ const checkAddressBalance = async (address, key) => {
             newLi.append(result);
             f1_lbalance.append(newLi);
         }
-        //f1_nbalance.innerText = result;
+
         f1_tbalance = result
         if(f1_nbalance.innerText !== f1_tbalance) {
             beep();
-            f1_status.innerText = 'balance change!!!';
+            // f1_status.innerText = 'balance change!!!';
+            const dif = parseFloat(f1_tbalance) - parseFloat(f1_nbalance.innerText);
+            if(dif > 0) {
+                f1_status.innerText = `+${dif}`;
+                f1_status.style.color = 'green';
+            } else {
+                f1_status.innerText = dif;
+                f1_status.style.color = 'red';
+            }
             f1_nbalance.innerText = result;
             const newLi = document.createElement('li');
             newLi.append(result);
@@ -91,9 +99,13 @@ const checkStatus = async (hash, key, dom) => {
         const res = await axios.get('https://api.bscscan.com/api', config)
         if(res.data.result.status) {
             beep();
-            dom.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="green" /></svg>`;
+            // dom.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="green" /></svg>`;
+            dom.innerText = 'Success';
+            dom.style.color = green;
         } else {
-                dom.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="red" /></svg>`;
+                // dom.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="red" /></svg>`;
+                dom.innerText = 'Fail';
+                dom.style.color = red;
 
                 const delayCheckStatus = (hash, key, dom) => {
                     return new Promise((resolve, reject) => {
@@ -182,7 +194,7 @@ const checkMultiAddressBalance = async (address, key) => {
             dataArr.forEach(data => {
                 const newTr = document.createElement('tr');
                 const trClass = data.account.substring(1);
-                const result = (parseInt(data.balance)/1000000000000000000).toFixed(18);
+                const result = (parseFloat(data.balance)/1000000000000000000).toFixed(18);
                 f3_tbalance = result;
                 newTr.classList.add(trClass);
                 f3_table.append(newTr);
@@ -209,13 +221,21 @@ const checkMultiAddressBalance = async (address, key) => {
                 const tdCurrent = document.querySelector(`.${trClass} .tdCurrent`);
                 const tdNew = document.querySelector(`.${trClass} .tdNew`);
                 const tdStatus = document.querySelector(`.${trClass} .tdStatus`);
-                const result = (parseInt(data.balance)/1000000000000000000).toFixed(18);
+                const result = (parseFloat(data.balance)/1000000000000000000).toFixed(18);
 
                 f3_tbalance = result;
                 if(tdNew.innerText !== f3_tbalance) {
                     beep();
+                    const dif = parseFloat(f3_tbalance) - parseFloat(tdNew.innerText);
+                    // tdStatus.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="#FFBF00" /></svg>`;
+                    if(dif > 0) {
+                        tdStatus.innerText = `+${dif}`;
+                        tdStatus.style.color = 'green';
+                    } else {
+                        tdStatus.innerText = dif;
+                        tdStatus.style.color = 'red';
+                    }
                     tdNew.innerText = result;
-                    tdStatus.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="#FFBF00" /></svg>`;
 
                     tdStatus.addEventListener('click', () => {
                         tdStatus.innerHTML = '';
@@ -229,7 +249,7 @@ const checkMultiAddressBalance = async (address, key) => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     checkMultiAddressBalance(address, key);
-                }, 500)
+                }, 200)
             })
         }
         let nextTrans = await delayCheckMulti(address, key);
