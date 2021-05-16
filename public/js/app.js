@@ -10,6 +10,8 @@ const f1_status = document.querySelector('.f1.status');
 const f1_lbalance = document.querySelector('.f1.li-balance');
 const f1_spin = document.querySelector('.f1.spin');
 
+let f1_tbalance = 0;
+
 f1_form.addEventListener('submit', async function(e) {
     e.preventDefault();
     const address = f1_form.elements.address.value;
@@ -24,16 +26,19 @@ const checkAddressBalance = async (address, key) => {
         const res = await axios.get('https://api.bscscan.com/api', config);
         const result = (parseInt(res.data.result)/1000000000000000000).toFixed(18);
         if(f1_cbalance.innerText === '') {
+            f1_tbalance = result;
             f1_cbalance.innerText = result;
+            f1_nbalance.innerText = result;
             const newLi = document.createElement('li');
             newLi.append(result);
             f1_lbalance.append(newLi);
         }
-        f1_nbalance.innerText = result;
-        if(f1_cbalance.innerText !== f1_nbalance.innerText) {
+        //f1_nbalance.innerText = result;
+        f1_tbalance = result
+        if(f1_nbalance.innerText !== f1_tbalance) {
             beep();
             f1_status.innerText = 'balance change!!!';
-            f1_cbalance.innerText = result;
+            f1_nbalance.innerText = result;
             const newLi = document.createElement('li');
             newLi.append(result);
             f1_lbalance.append(newLi);
@@ -55,6 +60,7 @@ const checkAddressBalance = async (address, key) => {
 
 f1_status.addEventListener('click', () => {
     f1_status.innerText = '';
+    f1_cbalance.innerText = f1_nbalance.innerText;
 })
 
 const f2_form = document.querySelector('.f2.query-form');
@@ -156,6 +162,7 @@ const f3_form = document.querySelector('.f3.query-form');
 const f3_spin = document.querySelector('.f3.spin');
 const f3_table = document.querySelector('.f3.table-trans');
 
+let f3_tbalance = 0;
 
 f3_form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -175,6 +182,8 @@ const checkMultiAddressBalance = async (address, key) => {
             dataArr.forEach(data => {
                 const newTr = document.createElement('tr');
                 const trClass = data.account.substring(1);
+                const result = (parseInt(data.balance)/1000000000000000000).toFixed(18);
+                f3_tbalance = result;
                 newTr.classList.add(trClass);
                 f3_table.append(newTr);
                 const tdAddress = document.createElement('td');
@@ -183,10 +192,11 @@ const checkMultiAddressBalance = async (address, key) => {
                 newTr.append(tdAddress);
                 const tdCurrent = document.createElement('td');
                 tdCurrent.classList.add('tdCurrent')
-                tdCurrent.append((parseInt(data.balance)/1000000000000000000).toFixed(18));
+                tdCurrent.append(result);
                 newTr.append(tdCurrent);
                 const tdNew = document.createElement('td');
                 tdNew.classList.add('tdNew');
+                tdNew.append(result);
                 newTr.append(tdNew);
                 const tdStatus = document.createElement('td');
                 tdStatus.classList.add('tdStatus');
@@ -199,15 +209,17 @@ const checkMultiAddressBalance = async (address, key) => {
                 const tdCurrent = document.querySelector(`.${trClass} .tdCurrent`);
                 const tdNew = document.querySelector(`.${trClass} .tdNew`);
                 const tdStatus = document.querySelector(`.${trClass} .tdStatus`);
+                const result = (parseInt(data.balance)/1000000000000000000).toFixed(18);
 
-                tdNew.innerText = (parseInt(data.balance)/1000000000000000000).toFixed(18);
-                if(tdCurrent.innerText !== tdNew.innerText) {
+                f3_tbalance = result;
+                if(tdNew.innerText !== f3_tbalance) {
                     beep();
-                    tdCurrent.innerText = (parseInt(data.balance)/1000000000000000000).toFixed(18);
+                    tdNew.innerText = result;
                     tdStatus.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="#FFBF00" /></svg>`;
 
                     tdStatus.addEventListener('click', () => {
                         tdStatus.innerHTML = '';
+                        tdCurrent.innerText = tdNew.innerText;
                     })
                 }                
             });
