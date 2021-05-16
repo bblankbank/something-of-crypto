@@ -43,7 +43,7 @@ const checkAddressBalance = async (address, key) => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     checkAddressBalance(address, key);
-                }, 500)
+                }, 200)
             })
         }
         let nextTrans = await delayCheckBalance(address, key);
@@ -85,9 +85,9 @@ const checkStatus = async (hash, key, dom) => {
         const res = await axios.get('https://api.bscscan.com/api', config)
         if(res.data.result.status) {
             beep();
-            dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="20" r="10" fill="green" /></svg>`;
+            dom.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="green" /></svg>`;
         } else {
-                dom.innerHTML = `<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="20" r="10" fill="red" /></svg>`;
+                dom.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="red" /></svg>`;
 
                 const delayCheckStatus = (hash, key, dom) => {
                     return new Promise((resolve, reject) => {
@@ -108,6 +108,7 @@ const checkNewTrans = async (address, key) => {
         const config = {params: {module: 'account', action: 'tokentx', address: address, apikey: key, sort: 'asc'}};
         const res = await axios.get('https://api.bscscan.com/api', config);
         const transArr = res.data.result.filter(tran => tran.tokenName === "Pancake LPs").filter(tran => tran.timeStamp > f2_form.elements.timestamp.value)
+        console.log(transArr);
         if(!transArr.some(tran => hashArr.includes(tran.hash))) {
             const newTrans = transArr.filter(tran => !hashArr.includes(tran.hash))
             for(tran of newTrans) {
@@ -145,6 +146,81 @@ const checkNewTrans = async (address, key) => {
             })
         }
         let nextTrans = await delayCheckTrans(address, key);
+
+    } catch(e) {
+        console.log('ERROR!!!', e)
+    }
+}
+
+const f3_form = document.querySelector('.f3.query-form');
+const f3_spin = document.querySelector('.f3.spin');
+const f3_table = document.querySelector('.f3.table-trans');
+
+
+f3_form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const address = f3_form.elements.address.value.replace(/\s/g, '');
+    const key = f3_form.elements.key.value;
+    f3_spin.classList.toggle('d-none');
+    const res = await checkMultiAddressBalance(address, key);
+})
+
+const checkMultiAddressBalance = async (address, key) => {
+    try {
+        const config = {params: {module: 'account', action: 'balancemulti', address: address, tax: 'lastest', apikey: key}};
+        const res = await axios.get('https://api.bscscan.com/api', config);
+        const dataArr = res.data.result;
+        
+        if(f3_table.children.length === 0) {
+            dataArr.forEach(data => {
+                const newTr = document.createElement('tr');
+                const trClass = data.account.substring(1);
+                newTr.classList.add(trClass);
+                f3_table.append(newTr);
+                const tdAddress = document.createElement('td');
+                tdAddress.classList.add('tdAddress')
+                tdAddress.innerHTML = `<a href='https://bscscan.com/address/${data.account}' target='_blank'>${data.account}</a>`;
+                newTr.append(tdAddress);
+                const tdCurrent = document.createElement('td');
+                tdCurrent.classList.add('tdCurrent')
+                tdCurrent.append((parseInt(data.balance)/1000000000000000000).toFixed(18));
+                newTr.append(tdCurrent);
+                const tdNew = document.createElement('td');
+                tdNew.classList.add('tdNew');
+                newTr.append(tdNew);
+                const tdStatus = document.createElement('td');
+                tdStatus.classList.add('tdStatus');
+                newTr.append(tdStatus);
+            });
+        } else {
+            dataArr.forEach(data => {
+                const trClass = data.account.substring(1);
+                const tdAddress = document.querySelector(`.${trClass}`);
+                const tdCurrent = document.querySelector(`.${trClass} .tdCurrent`);
+                const tdNew = document.querySelector(`.${trClass} .tdNew`);
+                const tdStatus = document.querySelector(`.${trClass} .tdStatus`);
+
+                tdNew.innerText = (parseInt(data.balance)/1000000000000000000).toFixed(18);
+                if(tdCurrent.innerText !== tdNew.innerText) {
+                    beep();
+                    tdCurrent.innerText = (parseInt(data.balance)/1000000000000000000).toFixed(18);
+                    tdStatus.innerHTML = `<svg viewBox="0 0 100 23" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="10" r="10" fill="#FFBF00" /></svg>`;
+
+                    tdStatus.addEventListener('click', () => {
+                        tdStatus.innerHTML = '';
+                    })
+                }                
+            });
+        }
+        
+        const delayCheckMulti = (address, key) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    checkMultiAddressBalance(address, key);
+                }, 500)
+            })
+        }
+        let nextTrans = await delayCheckMulti(address, key);
 
     } catch(e) {
         console.log('ERROR!!!', e)
